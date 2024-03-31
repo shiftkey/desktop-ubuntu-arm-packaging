@@ -1,7 +1,5 @@
 FROM ubuntu:18.04
 
-COPY entrypoint.sh /entrypoint.sh
-
 ENV AS=arm-linux-gnueabihf-as
 ENV STRIP=arm-linux-gnueabihf-strip
 ENV AR=arm-linux-gnueabihf-ar
@@ -24,8 +22,6 @@ RUN sudo sed -i "s/^deb/deb [arch=amd64,i386]/g" /etc/apt/sources.list
 RUN echo "deb [arch=arm64,armhf] http://ports.ubuntu.com/ $(lsb_release -s -c) main universe multiverse restricted" | tee -a /etc/apt/sources.list
 RUN echo "deb [arch=arm64,armhf] http://ports.ubuntu.com/ $(lsb_release -s -c)-updates main universe multiverse restricted" | tee -a /etc/apt/sources.list
 RUN dpkg --add-architecture armhf
-RUN dpkg --print-architecture
-RUN dpkg --print-foreign-architectures
 RUN apt-get update && apt-get install -y libx11-dev:armhf libx11-xcb-dev:armhf libxkbfile-dev:armhf libsecret-1-dev:armhf
 
 # This version supports older GLIBC (official builds required a minimum of GLIBC 2.28)
@@ -36,5 +32,12 @@ RUN apt-get update && apt-get install -y libx11-dev:armhf libx11-xcb-dev:armhf l
 #
 RUN curl -sL 'https://unofficial-builds.nodejs.org/download/release/v18.16.1/node-v18.16.1-linux-x64-glibc-217.tar.xz' | xzcat | tar -vx  --strip-components=1 -C /usr/local/
 RUN npm install --global yarn
+
+# install new enough git to work with repository
+RUN add-apt-repository ppa:git-core/ppa -y
+RUN apt update && apt install -y git
+RUN git --version
+
+COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
