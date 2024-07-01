@@ -25,12 +25,12 @@ RUN dpkg --add-architecture armhf
 RUN apt-get update && apt-get install -y libx11-dev:armhf libx11-xcb-dev:armhf libxkbfile-dev:armhf libsecret-1-dev:armhf
 
 # This version supports older GLIBC (official builds required a minimum of GLIBC 2.28)
-# this might break if you bump the `env.NODE_VERSION` version - ensure you are on the latest version
-# of which ever major/minor release which should have this variant available
+# this should be the same major version as is used in desktop/desktop
+# https://github.com/desktop/desktop/blob/development/.node-version
 #
 # See https://github.com/nodejs/unofficial-builds/ for more information on these versions.
 #
-RUN curl -sL 'https://unofficial-builds.nodejs.org/download/release/v18.16.1/node-v18.16.1-linux-x64-glibc-217.tar.xz' | xzcat | tar -vx  --strip-components=1 -C /usr/local/
+RUN curl -sL 'https://unofficial-builds.nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-x64-glibc-217.tar.xz' | xzcat | tar -vx  --strip-components=1 -C /usr/local/
 RUN npm install --global yarn
 
 # install new enough git to work with repository
