@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 ENV AS=arm-linux-gnueabihf-as
 ENV STRIP=arm-linux-gnueabihf-strip
 ENV AR=arm-linux-gnueabihf-ar
