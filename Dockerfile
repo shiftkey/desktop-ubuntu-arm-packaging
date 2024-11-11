@@ -1,4 +1,6 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
+
+ARG DEBIAN_FRONTEND=noninteractive
 
 ENV AS=arm-linux-gnueabihf-as
 ENV STRIP=arm-linux-gnueabihf-strip
@@ -30,7 +32,7 @@ RUN apt-get update && apt-get install -y libx11-dev:armhf libx11-xcb-dev:armhf l
 #
 # See https://github.com/nodejs/unofficial-builds/ for more information on these versions.
 #
-RUN curl -sL 'https://unofficial-builds.nodejs.org/download/release/v20.11.1/node-v20.11.1-linux-x64-glibc-217.tar.xz' | xzcat | tar -vx  --strip-components=1 -C /usr/local/
+RUN curl -sL 'https://unofficial-builds.nodejs.org/download/release/v20.17.0/node-v20.17.0-linux-x64-glibc-217.tar.xz' | xzcat | tar -vx  --strip-components=1 -C /usr/local/
 RUN npm install --global yarn
 
 # install new enough git to work with repository
