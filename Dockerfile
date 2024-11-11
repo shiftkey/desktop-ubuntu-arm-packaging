@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV AS=arm-linux-gnueabihf-as
 ENV STRIP=arm-linux-gnueabihf-strip
